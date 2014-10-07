@@ -15,7 +15,7 @@ class DaturaRoute {
     }
 
     public function init() {
-        $route = $this->_getRequest();
+        $route = $this->getRequest();
         $this->group = $route['group'];
         $this->control = $route['controll'];
         $this->action = $route['action'];
@@ -24,9 +24,9 @@ class DaturaRoute {
 
     /**
      * 在这里可以对不同样式的URL进行分门别类的处理，目前只实现了对Path Uri方式和传统URL的解析
-     * @return type
+     * @return Array
      */
-    public function _getRequest() {
+    public function getRequest() {
         $filter_param = array('<', '>', '"', "'", '%3C', '%3E', '%22', '%27', '%3c', '%3e');
         $uri = str_replace($filter_param, '', $_SERVER['REQUEST_URI']);
         $path = parse_url($uri);
@@ -43,8 +43,9 @@ class DaturaRoute {
         $reqArr = explode('/', $urlR);
         //现在需要去除空白，比如index.php/g//b，多个斜杠产生的空数组
         foreach ($reqArr as $key => $value) {
-            if (empty($value))
+            if (empty($value)) {
                 unset($reqArr[$key]);
+            }
         }
         $cnt = count($reqArr);
         if (empty($reqArr) || empty($reqArr[0])) {
@@ -121,12 +122,15 @@ class DaturaRoute {
         unset($_GET[$GLOBALS['_config']['UrlControllerName']]);
         unset($_GET[$GLOBALS['_config']['UrlActionName']]);
         $route['param'] = $_GET; //如果要获得最原始的数据，可以使用$_REQUEST
-        if ($route['group'] == NULL)
+        if ($route['group'] == NULL) {
             $route['group'] = 'default';
-        if ($route['controll'] == NULL)
+        }
+        if ($route['controll'] == NULL) {
             $route['controll'] = $GLOBALS['_config']['default_controller'];
-        if ($route['action'] == NULL)
+        }
+        if ($route['action'] == NULL) {
             $route['action'] = $GLOBALS['_config']['default_action'];
+        }
         return $route;
     }
 
@@ -137,13 +141,14 @@ class DaturaRoute {
      * @param type $args
      */
     public static function url($module, $action, $args = array(), $group = '') {
+        $protocol=  isset($_SERVER['HTTPS'])&&!empty($_SERVER['HTTPS'])?'https':'http';
         if (empty($group)) {
             $args['module'] = $module;
             $args['action'] = $action;
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/' . implode('/', $args);
+            $url = $protocol.'://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/' . implode('/', $args);
         } else {
             $args['action'] = $action;
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/' . $group . ':' . $module . '/' . implode('/', $args);
+            $url = $protocol.'://' .  $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/' . $group . ':' . $module . '/' . implode('/', $args);
         }
         return $url;
     }
@@ -163,5 +168,3 @@ class DaturaRoute {
     }
 
 }
-
-?>
