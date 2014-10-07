@@ -4,4 +4,3 @@ define ('_DTR_PATH', _ROOT . 'Datura' . DIRECTORY_SEPARATOR);// 系统目录
 require _DTR_PATH.'Datura.php';
 $app=new Datura;
 $app->run();
-?>
