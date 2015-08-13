@@ -70,6 +70,9 @@ class DbMysqli {
     public function getAll($sql) {
         $result = array();
         $res = $this->query($sql);
+        if($res==null){
+            return $result;
+        }
         while ($rows = $res->fetch_assoc()) {
             $result[] = $rows;
         }
@@ -85,6 +88,9 @@ class DbMysqli {
     public function getOne($sql) {
         $result = array();
         $res = $this->query($sql);
+        if($res==null){
+            return $result;
+        }
         while ($rows = $res->fetch_assoc()) {
             $result[] = $rows;
         }
