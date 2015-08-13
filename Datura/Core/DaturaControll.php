@@ -47,14 +47,21 @@ class Controller {
      * 分派给模板处理
      * @param string $file
      */
-    public function display($file = "") {
-        if (func_num_args() == 0) {
+    public function display($file = "", $retCon = false) {
+        if (func_num_args() == 0 || $file == NULL) {
             $this->control = get_called_class();
             $controlPath = substr($this->control, 0, stripos($this->control, 'Controller'));
             $this->action = $GLOBALS['ACTION'][0];
             $file = $GLOBALS['_config']['style'] . DIRECTORY_SEPARATOR . $controlPath . DIRECTORY_SEPARATOR . $this->action;
         }
-        $this->view->display($file);
+        if ($retCon == true) {
+            ob_start();
+            $this->view->display($file);
+            $contents = ob_get_clean();
+            return $contents;
+        } else {
+            $this->view->display($file);
+        }
     }
 
     /**
