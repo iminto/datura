@@ -10,7 +10,7 @@ class UploadFile {//类定义开始
         'allowExts'         =>  array(),    // 允许上传的文件后缀 留空不作后缀检查
         'allowTypes'        =>  array(),    // 允许上传的文件类型 留空不做检查
         'thumb'             =>  false,    // 使用对上传图片进行缩略图处理
-        'imageClassPath'    =>  'ORG.Util.Image',    // 图库类包路径
+        'imageClassPath'    =>  'Help.Image',    // 图库类包路径
         'thumbMaxWidth'     =>  '',// 缩略图最大宽度
         'thumbMaxHeight'    =>  '',// 缩略图最大高度
         'thumbPrefix'       =>  'thumb_',// 缩略图前缀
