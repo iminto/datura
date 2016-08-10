@@ -49,7 +49,7 @@ class Datura {
     protected $action;//模块名
     protected $param;//参数
     protected $group;//分组名
-    public static $IMPORT=array();
+    public static $IMPORT=array();//程序中引入的变量，留作待优化的参考
 
     public function __construct() {
     }
@@ -99,7 +99,7 @@ class Datura {
         }
         $methods = get_class_methods($controlName);
         if(!in_array($actionName, $methods, TRUE)){
-           throw new BaseException(sprintf('方法名 %s 不存在',  $actionName),1003);
+           throw new BaseException(sprintf('方法名 %s->%s 不存在或非public',  $controlName,$actionName),1003);
         }
         $GLOBALS['ACTION'][]=$this->action;
         $handler= new $controlName();// 实例控制器
