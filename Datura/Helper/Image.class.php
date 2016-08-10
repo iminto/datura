@@ -172,8 +172,8 @@ class Image {
      * @return string
      */
     static function buildImageVerify($length=4, $mode=1, $type='png', $width=48, $height=22, $verifyName='verify') {
-        import('Helper.String');
-        $randval = String::randString($length, $mode);
+        import('Helper.StringUtil');
+        $randval = StringUtil::randString($length, $mode);
         $_SESSION[$verifyName]=$randval;
         $width = ($length * 10 + 10) > $width ? $length * 10 + 10 : $width;
         if ($type != 'gif' && function_exists('imagecreatetruecolor')) {
